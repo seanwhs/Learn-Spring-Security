@@ -12,16 +12,6 @@ public class ProjectSecurityConfig {
     @Bean
     SecurityFilterChain defauFilterChain(HttpSecurity http) throws Exception {
         
-        // This is how to deny ALL request with denyAll()
-        // http.authorizeHttpRequests((request) -> request.anyRequest().denyAll())
-        //     .formLogin(Customizer.withDefaults())
-        //     .httpBasic(Customizer.withDefaults());
-        
-        // This is how to permit ALL request with denyAll()
-        // http.authorizeHttpRequests((request) -> request.anyRequest().permitAll())
-        //     .formLogin(Customizer.withDefaults())
-        //     .httpBasic(Customizer.withDefaults());
-        
             http.authorizeHttpRequests((request) -> request
             .requestMatchers("/myAccount", "/myLoans", "/myBalance", "/myCards").authenticated()
             .requestMatchers("/notices", "/contact").permitAll())
