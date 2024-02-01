@@ -1,5 +1,5 @@
 //ProjectSecurityConfig.java
-package learn.defining_and_managing_users.config;
+package learn.defining_and_managing_users.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -14,12 +14,14 @@ public class ProjectSecurityConfig {
     @Bean
     SecurityFilterChain defaultFilterChain(HttpSecurity http) throws Exception {
         
-            http.csrf(csrf -> csrf.disable())
+            http
                 .authorizeHttpRequests((request) -> request
                 .requestMatchers("/myAccount", "/myLoans", "/myBalance", "/myCards").authenticated()
                 .requestMatchers("/notices", "/contact", "/register").permitAll())
                 .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults());
+
+            http.csrf(csrf -> csrf.disable());
         
         return http.build();
     }

@@ -1,5 +1,5 @@
 //BankUserDetails.java
-package learn.defining_and_managing_users.config;
+package learn.defining_and_managing_users.security;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
