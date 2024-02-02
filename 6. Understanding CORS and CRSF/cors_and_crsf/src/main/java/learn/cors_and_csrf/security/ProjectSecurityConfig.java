@@ -38,7 +38,7 @@ public class ProjectSecurityConfig {
                 .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults());
 
-            http.csrf(csrf -> csrf.disable());
+            http.csrf(csrf -> csrf.ignoringRequestMatchers("/contact", "/register"));
         
         return http.build();
     }
