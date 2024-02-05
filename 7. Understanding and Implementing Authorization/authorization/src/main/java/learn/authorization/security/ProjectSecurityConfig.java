@@ -1,5 +1,5 @@
 //ProjectSecurityConfig.java
-package learn.cors_and_csrf.security;
+package learn.authorization.security;
 
 import java.util.Collections;
 import org.springframework.context.annotation.Bean;
@@ -16,7 +16,7 @@ import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import jakarta.servlet.http.HttpServletRequest;
-import learn.cors_and_csrf.filter.CsrfCookieFilter;
+import learn.authorization.filter.CsrfCookieFilter;
 
 @Configuration
 public class ProjectSecurityConfig {
