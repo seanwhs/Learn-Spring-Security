@@ -20,11 +20,14 @@ public class BalanceController {
 
     @GetMapping("/myBalance")
     public List<AccountTransactions> getBalanceDetails(@RequestParam int id) {
+        // Fetching account transactions for the specified customer ID and ordering them by transaction date in descending order
         List<AccountTransactions> accountTransactions = accountTransactionsRepository.
                 findByCustomerIdOrderByTransactionDtDesc(id);
         if (accountTransactions != null ) {
+            // Returning the list of account transactions if not null
             return accountTransactions;
         }else {
+            // Returning null if no account transactions are found
             return null;
         }
     }

@@ -1,4 +1,4 @@
-package learn.rest_api_bank_backend;
+package learn.password_management;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -19,10 +19,13 @@ public class CardsController {
 
     @GetMapping("/myCards")
     public List<Cards> getCardDetails(@RequestParam int id) {
+        // Fetching card details for the specified customer ID
         List<Cards> cards = cardsRepository.findByCustomerId(id);
         if (cards != null ) {
+            // Returning the card details if not null
             return cards;
         }else {
+            // Returning null if no card details are found
             return null;
         }
     }

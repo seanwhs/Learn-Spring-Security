@@ -1,4 +1,4 @@
-package learn.rest_api_bank_backend;
+package learn.custom_authn_provider;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

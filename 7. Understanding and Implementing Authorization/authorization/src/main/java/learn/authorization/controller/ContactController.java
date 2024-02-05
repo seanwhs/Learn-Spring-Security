@@ -22,14 +22,20 @@ public class ContactController {
 
     @PostMapping("/contact")
     public Contact saveContactInquiryDetails(@RequestBody Contact contact) {
+        // Generating a unique service request number
         contact.setContactId(getServiceReqNumber());
+        // Setting the creation date to the current date and time
         contact.setCreateDt(new Date(System.currentTimeMillis()));
+        // Saving contact inquiry details to the repository
         return contactRepository.save(contact);
     }
 
+    // Helper method to generate a unique service request number
     public String getServiceReqNumber() {
         Random random = new Random();
+        // Generating a random number within a specific range
         int ranNum = random.nextInt(999999999 - 9999) + 9999;
+        // Combining the random number with a prefix to create the service request number
         return "SR"+ranNum;
     }
 }

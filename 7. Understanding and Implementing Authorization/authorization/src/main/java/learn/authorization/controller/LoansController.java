@@ -19,10 +19,14 @@ public class LoansController {
 
     @GetMapping("/myLoans")
     public List<Loans> getLoanDetails(@RequestParam int id) {
+        // Retrieve a list of loans for the specified customer ID, ordered by start date in descending order
         List<Loans> loans = loanRepository.findByCustomerIdOrderByStartDtDesc(id);
+        // Check if the list is not empty
         if (loans != null ) {
+            // Return the list of loans
             return loans;
         }else {
+            // Return null if the list is empty
             return null;
         }
     }

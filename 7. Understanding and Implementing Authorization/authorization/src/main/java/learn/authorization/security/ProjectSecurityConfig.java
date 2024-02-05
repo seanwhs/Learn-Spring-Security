@@ -1,4 +1,4 @@
-//ProjectSecurityConfig.java
+// ProjectSecurityConfig.java
 package learn.authorization.security;
 
 import java.util.Collections;
@@ -21,16 +21,20 @@ import learn.authorization.filter.CsrfCookieFilter;
 @Configuration
 public class ProjectSecurityConfig {
 
+    // Configuring the default security filter chain
     @Bean
     SecurityFilterChain defaultFilterChain(HttpSecurity http) throws Exception {
 
+        // Creating a CsrfTokenRequestAttributeHandler for CSRF token handling
         CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
         requestHandler.setCsrfRequestAttributeName("_csrf");
 
+        // Configuring security context and session management
         http.securityContext((context) -> context
                 .requireExplicitSave(false))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
 
+        // Configuring CORS (Cross-Origin Resource Sharing) settings
         http.cors(cors -> cors.configurationSource(new CorsConfigurationSource() {
             @Override
             public CorsConfiguration getCorsConfiguration(@SuppressWarnings("null") HttpServletRequest request) {
@@ -44,21 +48,29 @@ public class ProjectSecurityConfig {
             }
         }));
 
+        // Configuring authorization for different endpoints
         http
                 .authorizeHttpRequests((request) -> request
-                        .requestMatchers("/myAccount", "/myLoans", "/myBalance", "/myCards", "/user").authenticated()
+                        .requestMatchers("/myAccount").hasAuthority("VIEWACCOUNT")
+                        .requestMatchers("/myBalance").hasAnyAuthority("VIEWACCOUNT","VIEWBALANCE")
+                        .requestMatchers("/myLoans").hasAuthority("VIEWLOANS")
+                        .requestMatchers("/myCards").hasAuthority("VIEWCARDS")
+                        .requestMatchers( "/user").authenticated()
+                        // .requestMatchers("/myAccount", "/myLoans", "/myBalance", "/myCards", "/user").authenticated()
                         .requestMatchers("/contact", "/notices", "/register").permitAll())
-                .formLogin(Customizer.withDefaults())
-                .httpBasic(Customizer.withDefaults());
+                .formLogin(Customizer.withDefaults()) // Configuring form-based login
+                .httpBasic(Customizer.withDefaults()); // Configuring HTTP Basic authentication
 
+        // Configuring CSRF protection
         http.csrf((csrf) -> csrf
                 .csrfTokenRequestHandler(requestHandler).ignoringRequestMatchers("/contact", "/register")
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
                 .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class);
 
-        return http.build();
+        return http.build(); // Building and returning the configured security filter chain
     }
 
+    // Creating a PasswordEncoder bean for encoding and decoding passwords
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

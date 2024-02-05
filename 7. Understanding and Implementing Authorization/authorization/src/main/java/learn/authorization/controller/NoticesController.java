@@ -19,14 +19,18 @@ public class NoticesController {
         this.noticeRepository=noticeRepository;
     }
     
+    // Endpoint to retrieve active notices
     @GetMapping("/notices")
     public ResponseEntity<List<Notice>> getNotices() {
+        // Fetching all active notices from the repository
         List<Notice> notices = noticeRepository.findAllActiveNotices();
         if (notices != null ) {
+            // Responding with the list of notices and setting cache control to 60 seconds
             return ResponseEntity.ok()
                     .cacheControl(CacheControl.maxAge(60, TimeUnit.SECONDS))
                     .body(notices);
         }else {
+            // Returning null if no notices are found
             return null;
         }
     }

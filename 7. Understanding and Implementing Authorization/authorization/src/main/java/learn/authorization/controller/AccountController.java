@@ -17,10 +17,13 @@ public class AccountController {
 
     @GetMapping("/myAccount")
     public Accounts getAccountDetails(@RequestParam int id) {
+        // Fetching account details for the specified customer ID
         Accounts accounts = accountsRepository.findByCustomerId(id);
         if (accounts != null ) {
+            // Returning the account details if not null
             return accounts;
         }else {
+            // Returning null if no account details are found
             return null;
         }
     }
